@@ -128,7 +128,7 @@ public class InventoryProvider extends ContentProvider{
      */
     private Uri insertProduct(Uri uri, ContentValues values) {
         // Check that the name is not null
-        String name = values.getAsString(InventoryContract.ProductEntry.COLUMN_PRODUCT_IMAGE);
+        String name = values.getAsString(ProductEntry.COLUMN_PRODUCT_NAME);
         if (name == null) {
             throw new IllegalArgumentException("Product requires a name");
         }
@@ -190,8 +190,8 @@ public class InventoryProvider extends ContentProvider{
     private int updateProduct(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         // If the {@link ProductEntry#COLUMN_PRODUCT_NAME} key is present,
         // check that the name value is not null.
-        if (values.containsKey(InventoryContract.ProductEntry.COLUMN_PRODUCT_IMAGE)) {
-            String name = values.getAsString(InventoryContract.ProductEntry.COLUMN_PRODUCT_IMAGE);
+        if (values.containsKey(ProductEntry.COLUMN_PRODUCT_NAME)) {
+            String name = values.getAsString(InventoryContract.ProductEntry.COLUMN_PRODUCT_NAME);
             if (name == null) {
                 throw new IllegalArgumentException("Product requires a name");
             }

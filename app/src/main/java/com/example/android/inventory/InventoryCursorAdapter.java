@@ -48,20 +48,20 @@ public class InventoryCursorAdapter extends CursorAdapter{
         int nameColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_NAME);
         int quantityColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
         int priceColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_PRICE);
-        int imageColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_IMAGE);
+        //int imageColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_IMAGE);
 
 
         // Read the product attributes from the Cursor for the current product
         String productName = cursor.getString(nameColumnIndex);
         Integer productQuantity = cursor.getInt(quantityColumnIndex);
         Float productPrice = cursor.getFloat(priceColumnIndex);
-        byte[] productImage = cursor.getBlob(imageColumnIndex);
+        //byte[] productImage = cursor.getBlob(imageColumnIndex);
 
         // Update the TextViews and ImageViews with the attributes for the current product
         txtProductName.setText(productName);
         txtQuantity.setText(productQuantity);
         txtPrice.setText(productPrice.toString());
-        Bitmap bitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
-        imgProduct.setImageBitmap(bitmap);
+        //Bitmap bitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
+        //imgProduct.setImageBitmap(bitmap);
     }
 }
