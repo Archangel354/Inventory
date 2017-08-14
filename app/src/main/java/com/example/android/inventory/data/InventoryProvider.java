@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
+
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
 
 /**
@@ -140,7 +141,16 @@ public class InventoryProvider extends ContentProvider{
         }
 
         // If the price is provided, check that it's greater than or equal to 0 dollars
-        float price = values.getAsFloat(InventoryContract.ProductEntry.COLUMN_PRODUCT_PRICE);
+        //String priceString = "0000.00";
+        //priceString = String.format("%.2f",priceString);
+        String priceString = values.getAsString(InventoryContract.ProductEntry.COLUMN_PRODUCT_PRICE);
+
+        //priceString = String.format("%.2f",priceString);
+
+        // Insert dummy data does go through here
+        float price = Float.parseFloat(priceString);
+
+
         if (price < 0) {
             throw new IllegalArgumentException("Price requires valid value");
         }
@@ -212,7 +222,7 @@ public class InventoryProvider extends ContentProvider{
             // Check that the price is greater than or equal to 0 dollars
             float price = values.getAsFloat(ProductEntry.COLUMN_PRODUCT_PRICE);
             if (price < 0) {
-                throw new IllegalArgumentException("Pet requires valid weight");
+                throw new IllegalArgumentException("Product requires valid price");
             }
         }
 

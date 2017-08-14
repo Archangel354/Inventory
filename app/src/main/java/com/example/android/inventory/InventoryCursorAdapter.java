@@ -2,14 +2,11 @@ package com.example.android.inventory;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.inventory.data.InventoryContract;
@@ -42,7 +39,7 @@ public class InventoryCursorAdapter extends CursorAdapter{
         TextView txtProductName = (TextView) view.findViewById(R.id.txtProductName);
         TextView txtQuantity = (TextView) view.findViewById(R.id.txtQuantity);
         TextView txtPrice = (TextView) view.findViewById(R.id.txtPrice);
-        ImageView imgProduct = (ImageView) view.findViewById(R.id.imgProduct);
+        //ImageView imgProduct = (ImageView) view.findViewById(R.id.imgProduct);
 
         // Find the columns of product attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_NAME);
@@ -61,6 +58,7 @@ public class InventoryCursorAdapter extends CursorAdapter{
         txtProductName.setText(productName);
         txtQuantity.setText(productQuantity.toString());
         txtPrice.setText(productPrice.toString());
+        Log.i("InventoryCursorAdapter", productPrice.toString());
         //Bitmap bitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
         //imgProduct.setImageBitmap(bitmap);
     }

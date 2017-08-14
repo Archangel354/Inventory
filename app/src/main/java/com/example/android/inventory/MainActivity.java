@@ -8,31 +8,23 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-import static butterknife.ButterKnife.findById;
-
-import static com.example.android.inventory.R.id.image;
 
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -109,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ContentValues values = new ContentValues();
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, "hammer");
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, "1");
-        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, "5.00");
+        values.put(ProductEntry.COLUMN_PRODUCT_PRICE, "555.99");
         // values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, image);
 
         // Insert a new row for hammer into the provider using the ContentResolver.
@@ -117,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // into the products database table.
         // Receive the new content URI that will allow us to access the hammer's data in the future.
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
+
+        //Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+        //startActivity(intent);
     }
 
     /**

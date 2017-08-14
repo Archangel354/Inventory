@@ -46,7 +46,7 @@
                 style="@style/EditorFieldStyle"
                 android:layout_width="match_parent"
                 android:hint="@string/hint_product_price"
-                android:inputType="number"/>
+                android:inputType="numberDecimal"/>
 
         </LinearLayout>
     </LinearLayout>
