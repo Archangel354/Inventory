@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("Inside MainActivity", "Onclick");
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
                 startActivity(intent);
 
@@ -68,11 +69,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Setup the item click listener
         inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Create new intent to go to {@link EditorActivity}
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-
                 // Form the content URI that represents the specific product that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the
                 // {@link ProductEntry#CONTENT_URI}.
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 // Launch the {@link EditorActivity} to display the data for the current pet.
                 startActivity(intent);
+
             }
         });
 
@@ -109,9 +111,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // into the products database table.
         // Receive the new content URI that will allow us to access the hammer's data in the future.
         Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
-
-        //Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-        //startActivity(intent);
     }
 
     /**
@@ -168,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Update {@link PetCursorAdapter} with this new cursor containing updated pet data
+        // Update {@link PetCursorAdapter} with this new cursor containing updated product data
         mCursorAdapter.swapCursor(data);
     }
 
