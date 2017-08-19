@@ -18,14 +18,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.android.inventory.data.InventoryContract;
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
+
+import static com.example.android.inventory.R.id.txtQuantity;
+import static com.example.android.inventory.data.InventoryContract.ProductEntry.CONTENT_URI;
 
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    /** Identifier for the pet data loader */
+    /** Identifier for the product data loader */
     private static final int EXISTING_PRODUCT_LOADER = 0;
 
     /** Content URI for the existing product (null if it's a new product) */
@@ -61,7 +66,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
-        Log.i("Inside Edtr Actvty", "onCreate");
+
         // Examine the intent that was used to launch this activity,
         // in order to figure out if we're creating a new product or editing an existing one.
         Intent intent = getIntent();
@@ -95,7 +100,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // or not, if the user tries to leave the editor without saving.
         mNameEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
-        mPriceEditText.setOnTouchListener(mTouchListener);        
+        mPriceEditText.setOnTouchListener(mTouchListener);
+
+
+
+
+
+
     }
 
     /**
@@ -262,12 +273,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         showUnsavedChangesDialog(discardButtonClickListener);
     }
 
+
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         // Since the editor shows all product attributes, define a projection that contains
         // all columns from the products table
         String[] projection = {
-                ProductEntry._ID,
+                ProductEntry.MY_PRODUCT_ID,
                 ProductEntry.COLUMN_PRODUCT_NAME,
                 ProductEntry.COLUMN_PRODUCT_QUANTITY,               
                 ProductEntry.COLUMN_PRODUCT_PRICE };
@@ -292,11 +305,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
             // Find the columns of product attributes that we're interested in
+            int idColumnIndex = cursor.getColumnIndex(ProductEntry.MY_PRODUCT_ID);
             int nameColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_NAME);
             int quantityColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_PRICE);
 
             // Extract out the value from the Cursor for the given column index
+            String ID = cursor.getString(idColumnIndex);
             String name = cursor.getString(nameColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
             String price = cursor.getString(priceColumnIndex);
@@ -304,7 +319,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Update the views on the screen with the values from the database
             mNameEditText.setText(name);
             mQuantityEditText.setText(Integer.toString(quantity));
-            //mPriceEditText.setText(Float.toString(price));
             mPriceEditText.setText(price);
         }
     }

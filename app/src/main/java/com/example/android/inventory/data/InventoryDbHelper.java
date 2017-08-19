@@ -30,7 +30,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper{
 
         // Create a String that contains the SQL statement to create the pets table
         String SQL_CREATE_PRODUCTS_TABLE =  "CREATE TABLE " + InventoryContract.ProductEntry.TABLE_NAME + " ("
-                + InventoryContract.ProductEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + InventoryContract.ProductEntry.MY_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + InventoryContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
                 + InventoryContract.ProductEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL, "
                 + InventoryContract.ProductEntry.COLUMN_PRODUCT_PRICE + " REAL NOT NULL);";

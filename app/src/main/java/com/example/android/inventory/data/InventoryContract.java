@@ -68,7 +68,7 @@ public class InventoryContract {
          * Unique ID number for each product (only for use in the products database table).
          * Type: INTEGER
          */
-        public final static String _ID = BaseColumns._ID;
+        public final static String MY_PRODUCT_ID = BaseColumns._ID;
 
         /**
          * Name of the product.

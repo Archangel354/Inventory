@@ -91,7 +91,7 @@ public class InventoryProvider extends ContentProvider{
                 // For every "?" in the selection, we need to have an element in the selection
                 // arguments that will fill in the "?". Since we have 1 question mark in the
                 // selection, we have 1 String in the selection arguments' String array.
-                selection = InventoryContract.ProductEntry._ID + "=?";
+                selection = InventoryContract.ProductEntry.MY_PRODUCT_ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
 
                 // This will perform a query on the products table where the _id equals 3 to return a
@@ -184,7 +184,7 @@ public class InventoryProvider extends ContentProvider{
                 // For the PRODUCT_ID code, extract out the ID from the URI,
                 // so we know which row to update. Selection will be "_id=?" and selection
                 // arguments will be a String array containing the actual ID.
-                selection = InventoryContract.ProductEntry._ID + "=?";
+                selection = InventoryContract.ProductEntry.MY_PRODUCT_ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
                 return updateProduct(uri, contentValues, selection, selectionArgs);
             default:
@@ -263,7 +263,7 @@ public class InventoryProvider extends ContentProvider{
                 break;
             case PRODUCT_ID:
                 // Delete a single row given by the ID in the URI
-                selection = ProductEntry._ID + "=?";
+                selection = ProductEntry.MY_PRODUCT_ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
                 rowsDeleted = database.delete(ProductEntry.TABLE_NAME, selection, selectionArgs);
                 break;
