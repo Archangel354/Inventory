@@ -155,6 +155,12 @@ public class InventoryProvider extends ContentProvider{
             throw new IllegalArgumentException("Price requires valid value");
         }
 
+        // Check that the vendor is not null
+        String vendor = values.getAsString(ProductEntry.COLUMN_PRODUCT_VENDOR);
+        if (vendor == null) {
+            throw new IllegalArgumentException("Product requires a vendor");
+        }
+
         // Get writeable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
@@ -217,12 +223,21 @@ public class InventoryProvider extends ContentProvider{
         }
 
         // If the {@link ProductEntry#COLUMN_PRODUCT_PRICE} key is present,
-        // check that the weight value is valid.
+        // check that the price value is valid.
         if (values.containsKey(ProductEntry.COLUMN_PRODUCT_PRICE)) {
             // Check that the price is greater than or equal to 0 dollars
             float price = values.getAsFloat(ProductEntry.COLUMN_PRODUCT_PRICE);
             if (price < 0) {
                 throw new IllegalArgumentException("Product requires valid price");
+            }
+        }
+
+        // If the {@link ProductEntry#COLUMN_PRODUCT_VENDOR} key is present,
+        // check that the vendor value is not null.
+        if (values.containsKey(ProductEntry.COLUMN_PRODUCT_VENDOR)) {
+            String vendor = values.getAsString(InventoryContract.ProductEntry.COLUMN_PRODUCT_VENDOR);
+            if (vendor == null) {
+                throw new IllegalArgumentException("Product requires a vendor");
             }
         }
 

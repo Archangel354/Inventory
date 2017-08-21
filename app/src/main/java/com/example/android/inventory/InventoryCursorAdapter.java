@@ -57,6 +57,7 @@ public class InventoryCursorAdapter extends CursorAdapter{
         TextView txtProductName = (TextView) view.findViewById(R.id.txtProductName);
         TextView txtQuantity = (TextView) view.findViewById(R.id.txtQuantity);
         TextView txtPrice = (TextView) view.findViewById(R.id.txtPrice);
+        //TextView txtVendor = (TextView) view.findViewById(R.id.txtVendor);
         //ImageView imgProduct = (ImageView) view.findViewById(R.id.imgProduct);
 
         // Find the columns of product attributes that we're interested in
@@ -64,6 +65,7 @@ public class InventoryCursorAdapter extends CursorAdapter{
         int nameColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_NAME);
         int quantityColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
         int priceColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_PRICE);
+        //int vendorColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_VENDOR);
         //int imageColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_IMAGE);
 
         // Read the product attributes from the Cursor for the current product
@@ -71,12 +73,14 @@ public class InventoryCursorAdapter extends CursorAdapter{
         String productName = cursor.getString(nameColumnIndex);
         String productQuantity = cursor.getString(quantityColumnIndex);
         Float productPrice = cursor.getFloat(priceColumnIndex);
+        //String productVendor = cursor.getString(vendorColumnIndex);
         //byte[] productImage = cursor.getBlob(imageColumnIndex);
 
         // Update the TextViews and ImageViews with the attributes for the current product
         txtProductName.setText(productName);
         txtQuantity.setText(productQuantity);
         txtPrice.setText(productPrice.toString());
+        //txtVendor.setText(productVendor);
         //Bitmap bitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
         //imgProduct.setImageBitmap(bitmap);
         //txtProductName.setText(productName);

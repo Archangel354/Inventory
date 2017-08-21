@@ -40,6 +40,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     /** EditText field to enter the product's price */
     private EditText mPriceEditText;
 
+    /** EditText field to enter the product's vendor */
+    private EditText mVendorEditText;
+
     /** Boolean flag that keeps track of whether the product has been edited (true) or not (false) */
     private boolean mProductHasChanged = false;
 
@@ -89,6 +92,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mNameEditText = (EditText) findViewById(R.id.edtName);
         mQuantityEditText = (EditText) findViewById(R.id.edtQuantity);
         mPriceEditText = (EditText) findViewById(R.id.edtPrice);
+        mVendorEditText = (EditText) findViewById(R.id.edtVendor);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
@@ -96,7 +100,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mNameEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener(mTouchListener);
-
+        mVendorEditText.setOnTouchListener(mTouchListener);
 
         // Now let's get the add Quantity Button to work in the editor activity
         Button btnAddQuantity = (Button) findViewById(R.id.btnAddQuantity);
@@ -150,6 +154,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String nameString = mNameEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
+        String vendorString = mVendorEditText.getText().toString().trim();
 
         // Check if this is supposed to be a new product
         // and check if all the fields in the editor are blank
@@ -167,6 +172,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, priceString);
+        values.put(ProductEntry.COLUMN_PRODUCT_VENDOR, vendorString);
         // If the quantity is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
         int quantity = 0;
@@ -315,7 +321,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 ProductEntry.MY_PRODUCT_ID,
                 ProductEntry.COLUMN_PRODUCT_NAME,
                 ProductEntry.COLUMN_PRODUCT_QUANTITY,               
-                ProductEntry.COLUMN_PRODUCT_PRICE };
+                ProductEntry.COLUMN_PRODUCT_PRICE ,
+                ProductEntry.COLUMN_PRODUCT_VENDOR};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
@@ -341,17 +348,20 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int nameColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_NAME);
             int quantityColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_PRICE);
+            int vendorColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_VENDOR);
 
             // Extract out the value from the Cursor for the given column index
             String ID = cursor.getString(idColumnIndex);
             String name = cursor.getString(nameColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
             String price = cursor.getString(priceColumnIndex);
+            String vendor = cursor.getString(vendorColumnIndex);
 
             // Update the views on the screen with the values from the database
             mNameEditText.setText(name);
             mQuantityEditText.setText(Integer.toString(quantity));
             mPriceEditText.setText(price);
+            mVendorEditText.setText(vendor);
         }
     }
 
@@ -361,6 +371,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mNameEditText.setText("");
         mQuantityEditText.setText("");
         mPriceEditText.setText("");
+        mVendorEditText.setText("");
     }
 
     private void showUnsavedChangesDialog(
@@ -439,10 +450,4 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Close the activity
         finish();
     }
-
-//    Button btnAddQuantity = (Button) findViewById(R.id.btnAddQuantity);
-
-
-
-
 }

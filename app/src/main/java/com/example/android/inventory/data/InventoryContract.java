@@ -84,9 +84,15 @@ public class InventoryContract {
 
         /**
          * Price of the product.
-         * Type: REAL
+         * Type: TEXT
          */
         public final static String COLUMN_PRODUCT_PRICE = "price";
+
+        /**
+         * Vendor of the product.
+         * Type: TEXT
+         */
+        public final static String COLUMN_PRODUCT_VENDOR = "vendor";
 
         /**
          * Image of the product.

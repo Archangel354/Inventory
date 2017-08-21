@@ -102,8 +102,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // and hammer's attributes are the values.
         ContentValues values = new ContentValues();
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, "hammer");
-        values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, "1");
+        values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, "10");
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, "555.99");
+        values.put(ProductEntry.COLUMN_PRODUCT_VENDOR, "Home Depot");
         // values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, image);
 
         // Insert a new row for hammer into the provider using the ContentResolver.
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 ProductEntry.COLUMN_PRODUCT_NAME,
                 ProductEntry.COLUMN_PRODUCT_QUANTITY,
                 ProductEntry.COLUMN_PRODUCT_PRICE,
+                ProductEntry.COLUMN_PRODUCT_VENDOR,
                 //ProductEntry.COLUMN_PRODUCT_IMAGE
         };
 
