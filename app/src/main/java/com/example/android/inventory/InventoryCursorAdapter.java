@@ -91,7 +91,7 @@ public class InventoryCursorAdapter extends CursorAdapter{
                 ContentValues cv = new ContentValues();
 
                 if (newQuantity > 0){
-                    //int newQuantity;
+
                     int mQuantity = newQuantity - 1;
                     cv.put(InventoryContract.ProductEntry.COLUMN_PRODUCT_QUANTITY, mQuantity);
                     Uri mUri = ContentUris.withAppendedId(InventoryContract.ProductEntry.CONTENT_URI, newID);
@@ -99,10 +99,6 @@ public class InventoryCursorAdapter extends CursorAdapter{
                 }
 
                 context.getContentResolver().notifyChange(InventoryContract.ProductEntry.CONTENT_URI, null);
-
-                Log.i("Inside btnSellPushed: ", String.valueOf(newQuantity -1));
-
-
             }
         });
 

@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,11 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.android.inventory.data.InventoryContract;
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
-
-import static com.example.android.inventory.R.id.txtQuantity;
-import static com.example.android.inventory.data.InventoryContract.ProductEntry.CONTENT_URI;
 
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -91,9 +86,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
 
         // Find all relevant views that we will need to read user input from
-        mNameEditText = (EditText) findViewById(R.id.edit_product_name);
-        mQuantityEditText = (EditText) findViewById(R.id.edit_product_quantity);
-        mPriceEditText = (EditText) findViewById(R.id.edit_product_price);       
+        mNameEditText = (EditText) findViewById(R.id.edtName);
+        mQuantityEditText = (EditText) findViewById(R.id.edtQuantity);
+        mPriceEditText = (EditText) findViewById(R.id.edtPrice);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
@@ -103,11 +98,48 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mPriceEditText.setOnTouchListener(mTouchListener);
 
 
+        // Now let's get the add Quantity Button to work in the editor activity
+        Button btnAddQuantity = (Button) findViewById(R.id.btnAddQuantity);
+        btnAddQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int qty = Integer.parseInt(mQuantityEditText.getText().toString());
+                qty++;
+                String qtyString = Integer.toString(qty);
+                ContentValues quantityView = new ContentValues();
+                quantityView.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, qty);
 
+                int rowsAffected = getContentResolver().update(mCurrentProductUri, quantityView, null, null);
+                if (rowsAffected != 0) {
+                    mQuantityEditText.setText(qtyString);
+                }
+            }
+        });
 
+        // Now let's get the remove Quantity Button to work in the editor activity
+        Button btnRemoveQuantity = (Button) findViewById(R.id.btnRemoveQuantity);
+        btnRemoveQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int qty = Integer.parseInt(mQuantityEditText.getText().toString());
 
+                if (qty > 0) {
+                    qty--;
+                    String qtyString = Integer.toString(qty);
+                    ContentValues quantityView = new ContentValues();
+                    quantityView.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, qty);
 
+                    int rowsAffected = getContentResolver().update(mCurrentProductUri, quantityView, null, null);
+                    if (rowsAffected != 0) {
+                        mQuantityEditText.setText(qtyString);
+                    }
+                } else {
+                    Toast.makeText(EditorActivity.this, "You can't have negative products", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
+
 
     /**
      * Get user input from editor and save pet into database.
@@ -407,6 +439,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Close the activity
         finish();
     }
+
+//    Button btnAddQuantity = (Button) findViewById(R.id.btnAddQuantity);
 
 
 
