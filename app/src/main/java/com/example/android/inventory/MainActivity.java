@@ -26,6 +26,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import static com.example.android.inventory.R.id.image;
+
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Inside MainActivity", "Onclick");
                 Intent intent = new Intent(MainActivity.this, EditorActivity.class);
                 startActivity(intent);
 
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, "10");
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, "555.99");
         values.put(ProductEntry.COLUMN_PRODUCT_VENDOR, "Home Depot");
-        // values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, image);
+        values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, image); // 8/2/17 9:44AM program did not crash yet
 
         // Insert a new row for hammer into the provider using the ContentResolver.
         // Use the {@link ProductEntry#CONTENT_URI} to indicate that we want to insert
@@ -155,8 +156,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 ProductEntry.COLUMN_PRODUCT_QUANTITY,
                 ProductEntry.COLUMN_PRODUCT_PRICE,
                 ProductEntry.COLUMN_PRODUCT_VENDOR,
-                //ProductEntry.COLUMN_PRODUCT_IMAGE
+                ProductEntry.COLUMN_PRODUCT_IMAGE
         };
+        // 8/22/17 9:59AM  uncommented out COLUMN_PRODUCT_IMAGE. Let's see what happens.  Nothing crashed yet.
+        // But no image fetched yet either.
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
@@ -179,18 +182,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mCursorAdapter.swapCursor(null);
     }
 
-    public void fetchImage(View view) throws IOException {
 
-        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/demoImage.jpg/");
-        FileInputStream fis = new FileInputStream(folder);
-        byte[] image = new byte[fis.available()];
-        fis.read(image);
-        ContentValues values = new ContentValues();
-        values.put("image", image);
-        values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, image);
-        //getContentResolver().insert(ProductEntry.CONTENT_URI, "image.png");
-        fis.close();
-        Toast.makeText(this, "Image Fetched", Toast.LENGTH_SHORT).show();
-
-    }
 }

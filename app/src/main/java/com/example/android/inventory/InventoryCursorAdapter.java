@@ -5,8 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.BaseColumns;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +14,11 @@ import android.widget.TextView;
 
 import com.example.android.inventory.data.InventoryContract;
 
-import static com.example.android.inventory.data.InventoryContract.ProductEntry.CONTENT_URI;
-
 /**
  * Created by e244194 on 8/11/2017.
  */
 
 public class InventoryCursorAdapter extends CursorAdapter{
-
-    //Context ctx;
-   // private Button tagButton = null;
-    //boolean btnSellPushed = false;
-    //private TextView txtQuantity;
-
-
 
     // The default constructor
     public InventoryCursorAdapter(Context context, Cursor c) {
@@ -57,34 +46,23 @@ public class InventoryCursorAdapter extends CursorAdapter{
         TextView txtProductName = (TextView) view.findViewById(R.id.txtProductName);
         TextView txtQuantity = (TextView) view.findViewById(R.id.txtQuantity);
         TextView txtPrice = (TextView) view.findViewById(R.id.txtPrice);
-        //TextView txtVendor = (TextView) view.findViewById(R.id.txtVendor);
-        //ImageView imgProduct = (ImageView) view.findViewById(R.id.imgProduct);
+
 
         // Find the columns of product attributes that we're interested in
         int nameIDIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.MY_PRODUCT_ID);
         int nameColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_NAME);
         int quantityColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_QUANTITY);
         int priceColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_PRICE);
-        //int vendorColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_VENDOR);
-        //int imageColumnIndex = cursor.getColumnIndex(InventoryContract.ProductEntry.COLUMN_PRODUCT_IMAGE);
 
         // Read the product attributes from the Cursor for the current product
-        //String   productID = cursor.getString(nameIDIndex);
         String productName = cursor.getString(nameColumnIndex);
         String productQuantity = cursor.getString(quantityColumnIndex);
         Float productPrice = cursor.getFloat(priceColumnIndex);
-        //String productVendor = cursor.getString(vendorColumnIndex);
-        //byte[] productImage = cursor.getBlob(imageColumnIndex);
 
         // Update the TextViews and ImageViews with the attributes for the current product
         txtProductName.setText(productName);
         txtQuantity.setText(productQuantity);
         txtPrice.setText(productPrice.toString());
-        //      txtVendor.setText(productVendor);
-        //Bitmap bitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
-        //imgProduct.setImageBitmap(bitmap);
-        //txtProductName.setText(productName);
-
 
         // Setup the Onclick listener for the button to sell a specific product
         //  Don't let the product quantity go below zero.
