@@ -161,6 +161,12 @@ public class InventoryProvider extends ContentProvider{
             throw new IllegalArgumentException("Product requires a vendor");
         }
 
+        // Check that the image is not null.  So far so good as of 8/22/17 9:26AM
+        Byte image = values.getAsByte(ProductEntry.COLUMN_PRODUCT_IMAGE);
+        if (vendor == null) {
+            throw new IllegalArgumentException("Product requires a vendor");
+        }
+
         // Get writeable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
@@ -238,6 +244,16 @@ public class InventoryProvider extends ContentProvider{
             String vendor = values.getAsString(InventoryContract.ProductEntry.COLUMN_PRODUCT_VENDOR);
             if (vendor == null) {
                 throw new IllegalArgumentException("Product requires a vendor");
+            }
+        }
+
+        // If the {@link ProductEntry#COLUMN_PRODUCT_IMAGE} key is present,
+        // check that the image value is not null.
+        // Let's see if this works as of 8/22/17 9:30AM.  9:35AM so far so good.
+        if (values.containsKey(ProductEntry.COLUMN_PRODUCT_IMAGE)) {
+            Byte image = values.getAsByte(InventoryContract.ProductEntry.COLUMN_PRODUCT_IMAGE);
+            if (image == null) {
+                throw new IllegalArgumentException("Product requires an image");
             }
         }
 
