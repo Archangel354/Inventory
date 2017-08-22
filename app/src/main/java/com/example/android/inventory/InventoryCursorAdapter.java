@@ -80,7 +80,7 @@ public class InventoryCursorAdapter extends CursorAdapter{
         txtProductName.setText(productName);
         txtQuantity.setText(productQuantity);
         txtPrice.setText(productPrice.toString());
-        //txtVendor.setText(productVendor);
+        //      txtVendor.setText(productVendor);
         //Bitmap bitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
         //imgProduct.setImageBitmap(bitmap);
         //txtProductName.setText(productName);

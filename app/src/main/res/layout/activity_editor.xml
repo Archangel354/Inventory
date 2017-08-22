@@ -147,6 +147,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Choose Picture"/>
+
+        <Button
+            android:id="@+id/btnSendEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send email "/>
     </LinearLayout>
 
 

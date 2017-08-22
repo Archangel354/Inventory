@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -67,7 +68,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // Examine the intent that was used to launch this activity,
         // in order to figure out if we're creating a new product or editing an existing one.
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         mCurrentProductUri = intent.getData();
 
         // If the intent DOES NOT contain a product content URI, then we know that we are
@@ -140,6 +141,45 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 } else {
                     Toast.makeText(EditorActivity.this, "You can't have negative products", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+
+        // Send an email to a vendor to order more products
+        Button btnSendEmail= (Button) findViewById(R.id.btnSendEmail);
+        btnSendEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a string from the database to include in the email.
+                String emailName = mNameEditText.getText().toString();
+                String emailVendor = mVendorEditText.getText().toString();
+
+                String emailText = "Please send us the following with qty.10: " +
+                        emailName +" from " + emailVendor;
+
+                Log.i("Send email", "");
+
+                String[] TO = {"rduncan354@gmail.com"};
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+                String emailSubject = "Need 10 " + emailName + "s";
+
+
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, emailText);
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                    finish();
+                    Log.i("Finished sending email", "");
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(EditorActivity.this,
+                            "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
     }
