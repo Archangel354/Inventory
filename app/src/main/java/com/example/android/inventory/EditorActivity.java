@@ -75,7 +75,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private EditText mVendorEditText;
 
     // URI for the image record
-    private Uri mCuurentImageUri;
+    private Uri mCurrentImageUri;
+
+
+   // private EditText c;
 
     // ImageView for the image record
     private ImageView mImageView;
@@ -135,6 +138,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mPriceEditText = (EditText) findViewById(R.id.edtPrice);
         mVendorEditText = (EditText) findViewById(R.id.edtVendor);
         mImageView = (ImageView) findViewById(R.id.imgProduct);
+        mImageEditText = (EditText) findViewById(R.id.edtImage);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
@@ -144,6 +148,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mPriceEditText.setOnTouchListener(mTouchListener);
         mVendorEditText.setOnTouchListener(mTouchListener);
         mImageView.setOnTouchListener(mTouchListener);
+        mImageEditText.setOnTouchListener(mTouchListener);
 
         // Now let's get the add Quantity Button to work in the editor activity
         Button btnAddQuantity = (Button) findViewById(R.id.btnAddQuantity);
@@ -252,10 +257,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // provided to this method as a parameter.  Pull that uri using "resultData.getData()"
 
             if (resultData != null) {
-                mCuurentImageUri = resultData.getData();
-                Log.i("Editor Activity: Image", "Uri: " + mCuurentImageUri.toString());
-
-                mImageView.setImageBitmap(getBitmapFromUri(mCuurentImageUri));
+                mCurrentImageUri = resultData.getData();
+                Log.i("Editor Activity: Image", "Uri: " + mCurrentImageUri.toString());
+                mImageView.setImageBitmap(getBitmapFromUri(mCurrentImageUri));
+                mImageEditText.setText(mCurrentImageUri.toString());
             }
         } else if (requestCode == SEND_MAIL_REQUEST && resultCode == Activity.RESULT_OK) {
 
@@ -323,12 +328,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String quantityString = mQuantityEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
         String vendorString = mVendorEditText.getText().toString().trim();
+        String imageString = mImageEditText.getText().toString().trim();
 
         // Check if this is supposed to be a new product
         // and check if all the fields in the editor are blank
         if (mCurrentProductUri == null &&
                 TextUtils.isEmpty(nameString) && TextUtils.isEmpty(quantityString) &&
-                TextUtils.isEmpty(priceString)) {
+                TextUtils.isEmpty(priceString)  && TextUtils.isEmpty(imageString)) {
             // Since no fields were modified, we can return early without creating a new product.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
@@ -341,9 +347,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, priceString);
         values.put(ProductEntry.COLUMN_PRODUCT_VENDOR, vendorString);
-        Bitmap newBitmap = getBitmapFromUri(mCurrentProductUri);
-        byte[] newImage = getByteArray(newBitmap);
-        values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, newImage);
+        values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, imageString);
+
         // If the quantity is not provided by the user, don't try to parse the string into an
         // integer value. Use 0 by default.
         int quantity = 0;
@@ -536,6 +541,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mQuantityEditText.setText(Integer.toString(quantity));
             mPriceEditText.setText(price);
             mVendorEditText.setText(vendor);
+            mImageEditText.setText(image);
+
+
+            // Display the image using the full path name
+            if (mImageEditText != null) {
+                Uri imageUri = Uri.parse(mImageEditText.getText().toString());
+                mImageView.setImageBitmap(getBitmapFromUri(imageUri));
+            }
         }
     }
 
@@ -546,6 +559,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mQuantityEditText.setText("");
         mPriceEditText.setText("");
         mVendorEditText.setText("");
+        mImageEditText.setText("");
     }
 
     private void showUnsavedChangesDialog(
