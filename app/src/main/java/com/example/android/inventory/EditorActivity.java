@@ -3,7 +3,9 @@ package com.example.android.inventory;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +17,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.AnyRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -36,6 +40,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static com.example.android.inventory.R.drawable.grocerycart;
 
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -107,6 +113,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+
+        ImageView initialImage = (ImageView) findViewById(R.id.imgProduct);
+        initialImage.setImageResource(grocerycart);
 
 
         // Examine the intent that was used to launch this activity,
@@ -546,7 +555,21 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
             // Display the image using the full path name
             if (mImageEditText != null) {
-                Uri imageUri = Uri.parse(mImageEditText.getText().toString());
+                //String defaultUriString = "android.resource://com.example.android.inventory/drawable/grocerycart.png";
+                //String defaultUriString = "drawable://R.drawable.grocerycart.png";
+                //String defaultUriString = "android.resource://com.example.android.inventory/R.drawable.grocerycart.png";
+                //String defaultUriString = "android.resource://com.example.android.inventory/drawable/grocerycart.png";
+                String defaultUriString = "drawable/grocerycart.png";
+               // drawable/grocerycart.png
+                int resID = getResources().getIdentifier("grocerycart" , "drawable", getPackageName());
+
+
+
+
+                Uri imageUri = Uri.parse(defaultUriString);
+
+                imageUri =  getUriToDrawable(this, resID);
+                //Uri imageUri = Uri.parse(mImageEditText.getText().toString());
                 mImageView.setImageBitmap(getBitmapFromUri(imageUri));
             }
         }
@@ -660,5 +683,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         byte[] img=bos.toByteArray();
         return img;
 
+
+
+
     }
+
+    public static final Uri getUriToDrawable(@NonNull Context context,
+                                             @AnyRes int drawableId) {
+        Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                "://" + context.getResources().getResourcePackageName(drawableId)
+                + '/' + context.getResources().getResourceTypeName(drawableId)
+                + '/' + context.getResources().getResourceEntryName(drawableId) );
+        return imageUri;
+    }
+
+
 }
