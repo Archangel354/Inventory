@@ -9,7 +9,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -18,16 +17,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-
 import static com.example.android.inventory.EditorActivity.getUriToDrawable;
-import static com.example.android.inventory.R.id.image;
 
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -102,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void insertProduct() {
 
         String defaultUriString = "drawable/grocerycart.png";
-        // drawable/grocerycart.png
         int resID = getResources().getIdentifier("grocerycart" , "drawable", getPackageName());
 
 

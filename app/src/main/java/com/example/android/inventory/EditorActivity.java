@@ -555,20 +555,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
             // Display the image using the full path name
             if (mImageEditText != null) {
-                //String defaultUriString = "android.resource://com.example.android.inventory/drawable/grocerycart.png";
-                //String defaultUriString = "drawable://R.drawable.grocerycart.png";
-                //String defaultUriString = "android.resource://com.example.android.inventory/R.drawable.grocerycart.png";
-                //String defaultUriString = "android.resource://com.example.android.inventory/drawable/grocerycart.png";
+
                 String defaultUriString = "drawable/grocerycart.png";
-               // drawable/grocerycart.png
-                //int resID = getResources().getIdentifier("grocerycart" , "drawable", getPackageName());
 
-
-
-
-                //Uri imageUri = Uri.parse(defaultUriString);
-
-              //  imageUri =  getUriToDrawable(this, resID);
                 Uri imageUri = Uri.parse(mImageEditText.getText().toString());
                 mImageView.setImageBitmap(getBitmapFromUri(imageUri));
             }
