@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import static com.example.android.inventory.EditorActivity.getUriToDrawable;
 import static com.example.android.inventory.R.id.image;
 
 
@@ -99,6 +100,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * Helper method to insert hardcoded product data into the database. For debugging purposes only.
      */
     private void insertProduct() {
+
+        String defaultUriString = "drawable/grocerycart.png";
+        // drawable/grocerycart.png
+        int resID = getResources().getIdentifier("grocerycart" , "drawable", getPackageName());
+
+
+
+
+        Uri imageUri = Uri.parse(defaultUriString);
+
+        imageUri =  getUriToDrawable(this, resID);
+        //Uri imageUri = Uri.parse(mImageEditText.getText().toString());
+        //mImageView.setImageBitmap(EditorActivity.getBitmapFromUri(imageUri));
+
+
         // Create a ContentValues object where column names are the keys,
         // and hammer's attributes are the values.
         ContentValues values = new ContentValues();
@@ -106,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, "10");
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, "555.99");
         values.put(ProductEntry.COLUMN_PRODUCT_VENDOR, "Home Depot");
-        values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, image); // 8/2/17 9:44AM program did not crash yet
+        values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, String.valueOf(imageUri)); // 8/2/17 9:44AM program did not crash yet
 
         // Insert a new row for hammer into the provider using the ContentResolver.
         // Use the {@link ProductEntry#CONTENT_URI} to indicate that we want to insert

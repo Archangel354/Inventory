@@ -561,15 +561,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 //String defaultUriString = "android.resource://com.example.android.inventory/drawable/grocerycart.png";
                 String defaultUriString = "drawable/grocerycart.png";
                // drawable/grocerycart.png
-                int resID = getResources().getIdentifier("grocerycart" , "drawable", getPackageName());
+                //int resID = getResources().getIdentifier("grocerycart" , "drawable", getPackageName());
 
 
 
 
-                Uri imageUri = Uri.parse(defaultUriString);
+                //Uri imageUri = Uri.parse(defaultUriString);
 
-                imageUri =  getUriToDrawable(this, resID);
-                //Uri imageUri = Uri.parse(mImageEditText.getText().toString());
+              //  imageUri =  getUriToDrawable(this, resID);
+                Uri imageUri = Uri.parse(mImageEditText.getText().toString());
                 mImageView.setImageBitmap(getBitmapFromUri(imageUri));
             }
         }
