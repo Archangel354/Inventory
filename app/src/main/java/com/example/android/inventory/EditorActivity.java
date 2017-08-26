@@ -342,8 +342,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Check if this is supposed to be a new product
         // and check if all the fields in the editor are blank
         if (mCurrentProductUri == null &&
-                TextUtils.isEmpty(nameString) && TextUtils.isEmpty(quantityString) &&
-                TextUtils.isEmpty(priceString)  && TextUtils.isEmpty(imageString)) {
+                (TextUtils.isEmpty(nameString) || TextUtils.isEmpty(quantityString) ||
+                TextUtils.isEmpty(priceString)  || TextUtils.isEmpty(imageString))) {
+            Toast.makeText(this, "Please add info to all the fields",
+            Toast.LENGTH_SHORT).show();
             // Since no fields were modified, we can return early without creating a new product.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
@@ -555,9 +557,20 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
             // Display the image using the full path name
             if (mImageEditText != null) {
-
+                //String defaultUriString = "android.resource://com.example.android.inventory/drawable/grocerycart.png";
+                //String defaultUriString = "drawable://R.drawable.grocerycart.png";
+                //String defaultUriString = "android.resource://com.example.android.inventory/R.drawable.grocerycart.png";
+                //String defaultUriString = "android.resource://com.example.android.inventory/drawable/grocerycart.png";
                 String defaultUriString = "drawable/grocerycart.png";
+               // drawable/grocerycart.png
+                //int resID = getResources().getIdentifier("grocerycart" , "drawable", getPackageName());
 
+
+
+
+                //Uri imageUri = Uri.parse(defaultUriString);
+
+              //  imageUri =  getUriToDrawable(this, resID);
                 Uri imageUri = Uri.parse(mImageEditText.getText().toString());
                 mImageView.setImageBitmap(getBitmapFromUri(imageUri));
             }
